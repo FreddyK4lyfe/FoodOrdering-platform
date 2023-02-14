@@ -1,0 +1,132 @@
+import java.util.ArrayList;
+
+/**
+ *
+ * @author Fredrick Kagia
+ */
+public class FastFoodKitchenSimulation {
+    private ArrayList<BurgerOrder> orderList = new ArrayList<>();
+    private static int nextOrdernum;
+    
+    //Constructor
+    public FastFoodKitchenSimulation(BurgerOrder _object1, BurgerOrder _object2, BurgerOrder _object3){
+        orderList.add(_object1);
+        incrementNextOrderNum();
+        orderList.add(_object2);
+        incrementNextOrderNum();
+        orderList.add(_object3);
+        incrementNextOrderNum();
+    }
+    
+    public boolean isOrderDone(int orderID){
+        for (BurgerOrder order : orderList){
+            if(order.getOrdernum() == orderID){
+                return false;
+            }  
+        }
+        return true;
+    } 
+    
+    public boolean cancelOrder(int orderID){
+        for (BurgerOrder order : orderList){
+            if(order.getOrdernum() == orderID){
+                orderList.remove(order);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int addOrder(int ham, int cheese, int veggie, int  soda, boolean toGo){
+    BurgerOrder order4 = new BurgerOrder(ham,cheese,veggie,soda,toGo,nextOrdernum);
+    orderList.add(order4);
+    incrementNextOrderNum();
+    return order4.getOrdernum();
+    } 
+    public boolean cancelLastOrder(){
+        if(!orderList.isEmpty()){
+          orderList.remove(nextOrdernum);
+          nextOrdernum--;
+          return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    public int findOrderSeq(int orderID){
+       for (int j = 0; j < orderList.size(); j++)
+       {  
+       if (orderList.get(j).equals(orderID))
+        {
+         return j;
+        }
+       }
+     return -1;
+    }
+    
+    public void selectionSort(){
+        for (int j = 0; j < orderList.size() - 1; j++)
+        {
+         int minIndex = j;
+         for (int k = j + 1; k < orderList.size(); k++)
+         {
+            if (orderList.get(k).getOrderSize() < orderList.get(k).getOrderSize())
+            {
+               minIndex = k;
+            }
+         }
+        }
+    } 
+    public void insertionSort()
+    {
+      for (int j = 1; j < orderList.size(); j++)
+      {
+         BurgerOrder temp = orderList.get(j);
+         int possibleIndex = j;
+         while ((possibleIndex > 0) && (temp.getOrderSize() < orderList.get(possibleIndex - 1).getOrderSize()))
+         {
+            //elements[possibleIndex] = elements[possibleIndex - 1];
+            orderList.set(possibleIndex, orderList.get(possibleIndex - 1));
+            possibleIndex--;
+         }
+         orderList.set(possibleIndex, temp);
+      }
+    }
+    
+    public int findOrderBin(int orderID){
+      int left = 0;
+      int right = orderList.size() - 1;
+      int target;
+      while (left <= right)
+      {
+         int middle = (left + right) / 2;
+         if (orderID < orderList.get(middle).getOrdernum())
+         {
+            right = middle - 1;
+         }
+         else if (orderID > orderList.get(middle).getOrdernum())
+         {
+            left = middle + 1;
+         }
+         else {
+            return middle;
+         }
+       }
+       return -1;
+   }
+
+    public ArrayList<BurgerOrder> getOrderList(){
+        return orderList;
+    }
+    public int getNumOrdersPending() {
+        return orderList.size();
+    }
+            
+    public int getNextorder(){
+        return nextOrdernum;
+    }
+    private static void incrementNextOrderNum(){
+        nextOrdernum += 1;
+    }
+}    
