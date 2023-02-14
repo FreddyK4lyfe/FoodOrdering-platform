@@ -1,0 +1,32 @@
+import java.util.ArrayList;
+
+/**
+ *
+ * @author Fredrick Kagia
+ */
+public class Module3Test {
+    public static void main(String[] args){
+        BurgerOrder order1 = new BurgerOrder(3,5,4,10,true,1);
+        BurgerOrder order2 = new BurgerOrder(0,0,3,3,false,2);
+        BurgerOrder order3 = new BurgerOrder(1,1,0,2,false,3);
+        FastFoodKitchenSimulation kitchen = new FastFoodKitchenSimulation(order1,order2,order3);
+        //PartA
+        int orderPosition = kitchen.findOrderSeq(2);
+        System.out.println("Using sequential search >> order postion is " + orderPosition);
+        //PartB
+        kitchen.selectionSort();
+        ArrayList<BurgerOrder> sortedOrders = kitchen.getOrderList();
+        int orderSize = 0;
+        for (BurgerOrder order : sortedOrders){
+            orderSize = order.getOrderSize();
+            System.out.println(order.getOrdernum() + " has " + orderSize + " burgers.");
+            
+        }
+        //partC
+        kitchen.insertionSort();
+        //part D
+        orderPosition = kitchen.findOrderBin(2);
+        System.out.println("Using binary search >> order position is " + orderPosition);
+    }
+    
+}
